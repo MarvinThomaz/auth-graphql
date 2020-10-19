@@ -1,0 +1,7 @@
+{
+    "dependencies": {
+        "@urql/exchange-auth": "^0.1.0",
+        "graphql-tag": "^2.11.0",
+        "urql": "^1.10.1"
+    }
+}

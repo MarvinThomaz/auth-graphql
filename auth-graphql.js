@@ -1,5 +1,6 @@
 import { createClient, dedupExchange, cacheExchange, fetchExchange } from 'urql';
 import { authExchange } from '@urql/exchange-auth';
+import gql from 'graphql-tag';
 
 const addAuthToOperation = ({ authState, operation }) => {
   if (!authState || !authState.idToken) {
@@ -86,16 +87,32 @@ const willAuthError = ({ authState }) => {
   return false;
 };
 
-const client = createClient({
-  url: '/graphql',
-  exchanges: [
-    dedupExchange,
-    cacheExchange,
-    authExchange({
-      addAuthToOperation,
-      getAuth,
-      willAuthError
-    }),
-    fetchExchange,
-  ],
-});
+const run = () => {
+
+  const client = createClient({
+    url: '/graphql',
+    exchanges: [
+      dedupExchange,
+      cacheExchange,
+      authExchange({
+        addAuthToOperation,
+        getAuth,
+        willAuthError
+      }),
+      fetchExchange,
+    ],
+  });
+
+  const query = gql`
+    getData() {
+      key,
+      value
+    }
+  `;
+  
+  const result = client.query(query)
+  
+  console.log(result);
+}
+
+run();
