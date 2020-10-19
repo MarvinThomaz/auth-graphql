@@ -78,13 +78,13 @@ const willAuthError = ({ authState }) => {
     dateToken.setUTCSeconds(dataUser.exp);
 
     if (dateToken < dateRequest) {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     }
   }
 
-  return false;
+  return true;
 };
 
 const run = () => {
